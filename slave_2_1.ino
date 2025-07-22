@@ -302,16 +302,18 @@ void setup() {
 void loop() {
 
   float distance1 = readUltrasonic(trigPin1, echoPin1);
+  distance1 = 23.023 * (distance1) + 0.5778; //kalibrasi CM
 
   // Membaca jarak dari sensor kedua
   float distance2 = readUltrasonic(trigPin2, echoPin2);
+  distance2 = 23.923 * (distance2) + 0.2683; //kalibrasi CM
   // put your main code here, to run repeatedly:
 
   //perubahan dari jarak menjadi persen
-  distance3 = ((13 - distance1) * 100)/13;
+  distance3 = ((12 - distance1) * 100)/12;
   // distance1 = ((12 - (A_distance1)100)/12)
   // Membaca jarak dar sensor kedua
-  distance4 = ((13 - distance2) * 100)/13;
+  distance4 = ((12 - distance2) * 100)/12;
 
     // Membaca jarak dari sensor pertama
 
@@ -375,7 +377,7 @@ void loop() {
     Serial.println(" L/min");
     lcd.setCursor(0, 3);  //menampilan pada kolam ke 0 pada barus ke 4
     lcd.print("Flow = ");
-    lcd.print(flowRate);
+    lcd.print(flowRate);  //ganti bagia ini jadi lcd.print("12");
     lcd.print(" L/min");
   }
   //=====================================
@@ -386,18 +388,18 @@ void loop() {
   //=====================================
   lcd.setCursor(0, 0);  //menampilan pada kolom pertama, baris pertama
   lcd.print("K-Tanah=");
-  lcd.print(kelembaban_akhir);
+  lcd.print(kelembaban_akhir); //ganti angka
   lcd.print("%-");
-  lcd.print(ket_tanah);
+  lcd.print(ket_tanah); //ganti keterangan
   
   lcd.setCursor(0, 1);  //menampilan pada kolom pertama, baris kedua
-  lcd.print("Insektisida= ");
-  lcd.print(distance3);
+  lcd.print("Insektisida= "); 
+  lcd.print(distance3); //ganti angka
   lcd.print("%");
 
   lcd.setCursor(0, 2); // menampilkan pada kolom pertama, barus ke 3
   lcd.print("Fungisida= ");
-  lcd.print(distance4);
+  lcd.print(distance4);   //ganti angka
   lcd.print("%");
   delay(1000);
 
@@ -413,10 +415,12 @@ void loop() {
       lcd.print("Insektisida= ");
       lcd.print(distance3);
       lcd.print("%");
-      // lcd.setCursor(0, 2);
-      // lcd.print("Pupuk Fungisida");
-      // lcd.setCursor(0, 3);
-      // lcd.print("Cukup");
+      lcd.setCursor(0, 2);
+      lcd.print("Fungisida Penuh");
+      lcd.setCursor(0, 3);
+      lcd.print("Fungisida= ");
+      lcd.print(distance4);
+      lcd.print("%");
       delay(1000);
     }
     else if (distance4 == 70)
@@ -428,9 +432,11 @@ void loop() {
       lcd.print(distance3);
       lcd.print("%");
       lcd.setCursor(0, 2);
-      lcd.print("Pupuk Fungisida");
+      lcd.print("Fungisida Cukup");
       lcd.setCursor(0, 3);
-      lcd.print("Cukup");
+      lcd.print("Fungisida= ");
+      lcd.print(distance4);
+      lcd.print("%");
       delay(1000);
     }
     else if ((distance4 >= 40) && (distance4 <= 69))
@@ -441,10 +447,11 @@ void loop() {
       lcd.print("Insektisida= ");
       lcd.print(distance3);
       lcd.print("%");
-      lcd.setCursor(0, 2);
-      lcd.print("Pupuk Fungisida");
+      lcd.print("Fungisida Cukup");
       lcd.setCursor(0, 3);
-      lcd.print("Menipis");
+      lcd.print("Fungisida= ");
+      lcd.print(distance4);
+      lcd.print("%");
       delay(1000);
     }
     else if ((distance4 >= 11) && (distance4 <= 39))
@@ -455,11 +462,13 @@ void loop() {
       lcd.print("Insektisida= ");
       lcd.print(distance3);
       lcd.print("%");
-      // lcd.setCursor(0, 2);
-      // lcd.print("Pupuk Fungisida");
-      // lcd.setCursor(0, 3);
-      // lcd.print("Menipis");
-      // delay(1000);
+      lcd.setCursor(0, 2);
+      lcd.print("Fungisida Menipis");
+      lcd.setCursor(0, 3);
+      lcd.print("Fungisida= ");
+      lcd.print(distance4);
+      lcd.print("%");
+      delay(1000);
     }
     else if(distance4 <= 10)
     {
@@ -484,9 +493,9 @@ void loop() {
       lcd.print(distance3);
       lcd.print("%");
       lcd.setCursor(0, 2);
-      lcd.print("Fungisida penuh");
+      lcd.print("Fungisida Penuh");
       lcd.setCursor(0, 3);
-      lcd.print("Fungisida : ");
+      lcd.print("Fungisida= ");
       lcd.print(distance4);
       lcd.print("%");
       delay(1000);
@@ -497,58 +506,76 @@ void loop() {
   {
     if((distance4 > 70) && (distance4 <= 99))
     {
-      // lcd.setCursor(0, 0);
-      // lcd.print("Pupuk Insektisida");
-      // lcd.setCursor(0, 1);
-      // lcd.print("Cukup");
+      lcd.setCursor(0, 0);
+      lcd.print("Insektisida Penuh");
+      lcd.setCursor(0, 1);
+      lcd.print("Insektisida= ");
+      lcd.print(distance3);
+      lcd.print("%");
       lcd.setCursor(0, 2);
-      lcd.print("Pupuk Fungisida");
+      lcd.print("Fungisida Penuh");
       lcd.setCursor(0, 3);
-      lcd.print("Cukup");
+      lcd.print("Fungisida= ");
+      lcd.print(distance4);
+      lcd.print("%");
       delay(1000);
     }
     else if (distance4 == 70)
     {
-      // lcd.setCursor(0, 0);
-      // lcd.print("Pupuk Insektisida");
-      // lcd.setCursor(0, 1);
-      // lcd.print("Cukup");
+      lcd.setCursor(0, 0);
+      lcd.print("Insektisida Penuh");
+      lcd.setCursor(0, 1);
+      lcd.print("Insektisida= ");
+      lcd.print(distance3);
+      lcd.print("%");
       lcd.setCursor(0, 2);
-      lcd.print("Pupuk Fungisida");
+      lcd.print("Fungisida Cukup");
       lcd.setCursor(0, 3);
-      lcd.print("Cukup");
+      lcd.print("Fungisida= ");
+      lcd.print(distance4);
+      lcd.print("%");
       delay(1000);
     }
     else if ((distance4 >= 40) && (distance4 <= 69))
     {
-      // lcd.setCursor(0, 0);
-      // lcd.print("Pupuk Insektisida");
-      // lcd.setCursor(0, 1);
-      // lcd.print("Cukup");
+      lcd.setCursor(0, 0);
+      lcd.print("Insektisida Penuh");
+      lcd.setCursor(0, 1);
+      lcd.print("Insektisida= ");
+      lcd.print(distance3);
+      lcd.print("%");
       lcd.setCursor(0, 2);
-      lcd.print("Pupuk Fungisida");
+      lcd.print("Fungisida Cukup");
       lcd.setCursor(0, 3);
-      lcd.print("Menipis");
+      lcd.print("Fungisida= ");
+      lcd.print(distance4);
+      lcd.print("%");
       delay(1000);
     }
     else if ((distance4 >= 11) && (distance4 <= 39))
     {
-      // lcd.setCursor(0, 0);
-      // lcd.print("Pupuk Insektisida");
-      // lcd.setCursor(0, 1);
-      // lcd.print("Cukup");
-      // lcd.setCursor(0, 2);
-      // lcd.print("Pupuk Fungisida");
-      // lcd.setCursor(0, 3);
-      // lcd.print("Menipis");
-      // delay(1000);
+      lcd.setCursor(0, 0);
+      lcd.print("Insektisida Penuh");
+      lcd.setCursor(0, 1);
+      lcd.print("Insektisida= ");
+      lcd.print(distance3);
+      lcd.print("%");
+      lcd.setCursor(0, 2);
+      lcd.print("Fungisida Menipis");
+      lcd.setCursor(0, 3);
+      lcd.print("Fungisida= ");
+      lcd.print(distance4);
+      lcd.print("%");
+      delay(1000);
     }
     else if(distance4 <= 10)
     {
-      // lcd.setCursor(0, 0);
-      // lcd.print("Pupuk Insektisida");
-      // lcd.setCursor(0, 1);
-      // lcd.print("Cukup");
+      lcd.setCursor(0, 0);
+      lcd.print("Insektisida Penuh");
+      lcd.setCursor(0, 1);
+      lcd.print("Insektisida= ");
+      lcd.print(distance3);
+      lcd.print("%");
       lcd.setCursor(0, 2);
       lcd.print("Fungisida Habis");
       lcd.setCursor(0, 3);
@@ -557,14 +584,16 @@ void loop() {
     }
     else if(distance4 == 100)
     {
-      // lcd.setCursor(0, 0);
-      // lcd.print("Pupuk Insektisida");
-      // lcd.setCursor(0, 1);
-      // lcd.print("Cukup");
+      lcd.setCursor(0, 0);
+      lcd.print("Insektisida Penuh");
+      lcd.setCursor(0, 1);
+      lcd.print("Insektisida= ");
+      lcd.print(distance3);
+      lcd.print("%");
       lcd.setCursor(0, 2);
-      lcd.print("Fungisida penuh");
+      lcd.print("Fungisida Penuh");
       lcd.setCursor(0, 3);
-      lcd.print("Fungisida : ");
+      lcd.print("Fungisida= ");
       lcd.print(distance4);
       lcd.print("%");
       delay(1000);
@@ -576,57 +605,75 @@ void loop() {
   if((distance4 > 70) && (distance4 <= 99))
     {
       lcd.setCursor(0, 0);
-      lcd.print("Pupuk Insektisida");
+      lcd.print("Insektisida CUkup");
       lcd.setCursor(0, 1);
-      lcd.print("Cukup");
+      lcd.print("Insektisida= ");
+      lcd.print(distance3);
+      lcd.print("%");
       lcd.setCursor(0, 2);
-      lcd.print("Pupuk Fungisida");
+      lcd.print("Fungisida Penuh");
       lcd.setCursor(0, 3);
-      lcd.print("Cukup");
+      lcd.print("Fungisida= ");
+      lcd.print(distance4);
+      lcd.print("%");
       delay(1000);
     }
     else if (distance4 == 70)
     {
       lcd.setCursor(0, 0);
-      lcd.print("Pupuk Insektisida");
+      lcd.print("Insektisida CUkup");
       lcd.setCursor(0, 1);
-      lcd.print("Cukup");
+      lcd.print("Insektisida= ");
+      lcd.print(distance3);
+      lcd.print("%");
       lcd.setCursor(0, 2);
-      lcd.print("Pupuk Fungisida");
+      lcd.print("Fungisida Cukup");
       lcd.setCursor(0, 3);
-      lcd.print("Cukup");
+      lcd.print("Fungisida= ");
+      lcd.print(distance4);
+      lcd.print("%");
       delay(1000);
     }
     else if ((distance4 >= 40) && (distance4 <= 69))
     {
       lcd.setCursor(0, 0);
-      lcd.print("Pupuk Insektisida");
+      lcd.print("Insektisida CUkup");
       lcd.setCursor(0, 1);
-      lcd.print("Cukup");
+      lcd.print("Insektisida= ");
+      lcd.print(distance3);
+      lcd.print("%");
       lcd.setCursor(0, 2);
-      lcd.print("Pupuk Fungisida");
+      lcd.print("Fungisida Cukup");
       lcd.setCursor(0, 3);
-      lcd.print("Menipis");
+      lcd.print("Fungisida= ");
+      lcd.print(distance4);
+      lcd.print("%");
       delay(1000);
     }
     else if ((distance4 >= 11) && (distance4 <= 39))
     {
       lcd.setCursor(0, 0);
-      lcd.print("Pupuk Insektisida");
+      lcd.print("Insektisida CUkup");
       lcd.setCursor(0, 1);
-      lcd.print("Cukup");
-      // lcd.setCursor(0, 2);
-      // lcd.print("Pupuk Fungisida");
-      // lcd.setCursor(0, 3);
-      // lcd.print("Menipis");
-      // delay(1000);
+      lcd.print("Insektisida= ");
+      lcd.print(distance3);
+      lcd.print("%");
+      lcd.setCursor(0, 2);
+      lcd.print("Fungisida Menipis");
+      lcd.setCursor(0, 3);
+      lcd.print("Fungisida= ");
+      lcd.print(distance4);
+      lcd.print("%");
+      delay(1000);
     }
     else if(distance4 <= 10)
     {
       lcd.setCursor(0, 0);
-      lcd.print("Pupuk Insektisida");
+      lcd.print("Insektisida CUkup");
       lcd.setCursor(0, 1);
-      lcd.print("Cukup");
+      lcd.print("Insektisida= ");
+      lcd.print(distance3);
+      lcd.print("%");
       lcd.setCursor(0, 2);
       lcd.print("Fungisida Habis");
       lcd.setCursor(0, 3);
@@ -636,13 +683,15 @@ void loop() {
     else if(distance4 == 100)
     {
       lcd.setCursor(0, 0);
-      lcd.print("Pupuk Insektisida");
+      lcd.print("Insektisida CUkup");
       lcd.setCursor(0, 1);
-      lcd.print("Cukup");
+      lcd.print("Insektisida= ");
+      lcd.print(distance3);
+      lcd.print("%");
       lcd.setCursor(0, 2);
-      lcd.print("Fungisida penuh");
+      lcd.print("Fungisida Penuh");
       lcd.setCursor(0, 3);
-      lcd.print("Fungisida : ");
+      lcd.print("Fungisida= ");
       lcd.print(distance4);
       lcd.print("%");
       delay(1000);
@@ -653,57 +702,75 @@ void loop() {
   if((distance4 > 70) && (distance4 <= 99))
     {
       lcd.setCursor(0, 0);
-      lcd.print("Pupuk Insektisida");
+      lcd.print("Insektisida CUkup");
       lcd.setCursor(0, 1);
-      lcd.print("Menipis");
+      lcd.print("Insektisida= ");
+      lcd.print(distance3);
+      lcd.print("%");
       lcd.setCursor(0, 2);
-      lcd.print("Pupuk Fungisida");
+      lcd.print("Fungisida Penuh");
       lcd.setCursor(0, 3);
-      lcd.print("Cukup");
+      lcd.print("Fungisida= ");
+      lcd.print(distance4);
+      lcd.print("%");
       delay(1000);
     }
     else if (distance4 == 70)
     {
       lcd.setCursor(0, 0);
-      lcd.print("Pupuk Insektisida");
+      lcd.print("Insektisida CUkup");
       lcd.setCursor(0, 1);
-      lcd.print("Menipis");
+      lcd.print("Insektisida= ");
+      lcd.print(distance3);
+      lcd.print("%");
       lcd.setCursor(0, 2);
-      lcd.print("Pupuk Fungisida");
+      lcd.print("Fungisida Cukup");
       lcd.setCursor(0, 3);
-      lcd.print("Cukup");
+      lcd.print("Fungisida= ");
+      lcd.print(distance4);
+      lcd.print("%");
       delay(1000);
     }
     else if ((distance4 >= 40) && (distance4 <= 69))
     {
       lcd.setCursor(0, 0);
-      lcd.print("Pupuk Insektisida");
+      lcd.print("Insektisida CUkup");
       lcd.setCursor(0, 1);
-      lcd.print("Menipis");
+      lcd.print("Insektisida= ");
+      lcd.print(distance3);
+      lcd.print("%");
       lcd.setCursor(0, 2);
-      lcd.print("Pupuk Fungisida");
+      lcd.print("Fungisida Cukup");
       lcd.setCursor(0, 3);
-      lcd.print("Menipis");
+      lcd.print("Fungisida= ");
+      lcd.print(distance4);
+      lcd.print("%");
       delay(1000);
     }
     else if ((distance4 >= 11) && (distance4 <= 39))
     {
       lcd.setCursor(0, 0);
-      lcd.print("Pupuk Insektisida");
+      lcd.print("Insektisida Cukup");
       lcd.setCursor(0, 1);
-      lcd.print("Menipis");
-      // lcd.setCursor(0, 2);
-      // lcd.print("Pupuk Fungisida");
-      // lcd.setCursor(0, 3);
-      // lcd.print("Menipis");
-      // delay(1000);
+      lcd.print("Insektisida= ");
+      lcd.print(distance3);
+      lcd.print("%");
+      lcd.setCursor(0, 2);
+      lcd.print("Fungisida Menipis");
+      lcd.setCursor(0, 3);
+      lcd.print("Fungisida= ");
+      lcd.print(distance4);
+      lcd.print("%");
+      delay(1000);
     }
     else if(distance4 <= 10)
     {
       lcd.setCursor(0, 0);
-      lcd.print("Pupuk Insektisida");
+      lcd.print("Insektisida Cukup");
       lcd.setCursor(0, 1);
-      lcd.print("Menipis");
+      lcd.print("Insektisida= ");
+      lcd.print(distance3);
+      lcd.print("%");
       lcd.setCursor(0, 2);
       lcd.print("Fungisida Habis");
       lcd.setCursor(0, 3);
@@ -713,13 +780,15 @@ void loop() {
     else if(distance4 == 100)
     {
       lcd.setCursor(0, 0);
-      lcd.print("Pupuk Insektisida");
+      lcd.print("Insektisida Cukup");
       lcd.setCursor(0, 1);
-      lcd.print("Menipis");
+      lcd.print("Insektisida= ");
+      lcd.print(distance3);
+      lcd.print("%");
       lcd.setCursor(0, 2);
-      lcd.print("Fungisida penuh");
+      lcd.print("Fungisida Penuh");
       lcd.setCursor(0, 3);
-      lcd.print("Fungisida : ");
+      lcd.print("Fungisida= ");
       lcd.print(distance4);
       lcd.print("%");
       delay(1000);
@@ -730,58 +799,76 @@ void loop() {
   {
   if((distance4 > 70) && (distance4 <= 99))
     {
-      // lcd.setCursor(0, 0);
-      // lcd.print("Pupuk Insektisida");
-      // lcd.setCursor(0, 1);
-      // lcd.print("Menipis");
-      // lcd.setCursor(0, 2);
-      // lcd.print("Pupuk Fungisida");
-      // lcd.setCursor(0, 3);
-      // lcd.print("Cukup");
-      // delay(1000);
+      lcd.setCursor(0, 0);
+      lcd.print("Insektisida Menipis");
+      lcd.setCursor(0, 1);
+      lcd.print("Insektisida= ");
+      lcd.print(distance3);
+      lcd.print("%");
+      lcd.setCursor(0, 2);
+      lcd.print("Fungisida Penuh");
+      lcd.setCursor(0, 3);
+      lcd.print("Fungisida= ");
+      lcd.print(distance4);
+      lcd.print("%");
+      delay(1000);
     }
     else if (distance4 == 70)
     {
-      // lcd.setCursor(0, 0);
-      // lcd.print("Pupuk Insektisida");
-      // lcd.setCursor(0, 1);
-      // lcd.print("Menipis");
+      lcd.setCursor(0, 0);
+      lcd.print("Insektisida Menipis");
+      lcd.setCursor(0, 1);
+      lcd.print("Insektisida= ");
+      lcd.print(distance3);
+      lcd.print("%");
       lcd.setCursor(0, 2);
-      lcd.print("Pupuk Fungisida");
+      lcd.print("Fungisida Cukup");
       lcd.setCursor(0, 3);
-      lcd.print("Cukup");
+      lcd.print("Fungisida= ");
+      lcd.print(distance4);
+      lcd.print("%");
       delay(1000);
     }
     else if ((distance4 >= 40) && (distance4 <= 69))
     {
-      // lcd.setCursor(0, 0);
-      // lcd.print("Pupuk Insektisida");
-      // lcd.setCursor(0, 1);
-      // lcd.print("Menipis");
+      lcd.setCursor(0, 0);
+      lcd.print("Insektisida Menipis");
+      lcd.setCursor(0, 1);
+      lcd.print("Insektisida= ");
+      lcd.print(distance3);
+      lcd.print("%");
       lcd.setCursor(0, 2);
-      lcd.print("Pupuk Fungisida");
+      lcd.print("Fungisida Cukup");
       lcd.setCursor(0, 3);
-      lcd.print("Menipis");
+      lcd.print("Fungisida= ");
+      lcd.print(distance4);
+      lcd.print("%");
       delay(1000);
     }
     else if ((distance4 >= 11) && (distance4 <= 39))
     {
-      // lcd.setCursor(0, 0);
-      // lcd.print("Pupuk Insektisida");
-      // lcd.setCursor(0, 1);
-      // lcd.print("Menipis");
-      // lcd.setCursor(0, 2);
-      // lcd.print("Pupuk Fungisida");
-      // lcd.setCursor(0, 3);
-      // lcd.print("Menipis");
-      // delay(1000);
+      lcd.setCursor(0, 0);
+      lcd.print("Insektisida Menipis");
+      lcd.setCursor(0, 1);
+      lcd.print("Insektisida= ");
+      lcd.print(distance3);
+      lcd.print("%");
+      lcd.setCursor(0, 2);
+      lcd.print("Fungisida Menipis");
+      lcd.setCursor(0, 3);
+      lcd.print("Fungisida= ");
+      lcd.print(distance4);
+      lcd.print("%");
+      delay(1000);
     }
     else if(distance4 <= 10)
     {
-      // lcd.setCursor(0, 0);
-      // lcd.print("Pupuk Insektisida");
-      // lcd.setCursor(0, 1);
-      // lcd.print("Menipis");
+      lcd.setCursor(0, 0);
+      lcd.print("Insektisida Menipis");
+      lcd.setCursor(0, 1);
+      lcd.print("Insektisida= ");
+      lcd.print(distance3);
+      lcd.print("%");
       lcd.setCursor(0, 2);
       lcd.print("Fungisida Habis");
       lcd.setCursor(0, 3);
@@ -791,13 +878,15 @@ void loop() {
     else if(distance4 == 100)
     {
       lcd.setCursor(0, 0);
-      lcd.print("Pupuk Insektisida");
+      lcd.print("Insektisida Menipis");
       lcd.setCursor(0, 1);
-      lcd.print("Menipis");
+      lcd.print("Insektisida= ");
+      lcd.print(distance3);
+      lcd.print("%");
       lcd.setCursor(0, 2);
-      lcd.print("Fungisida penuh");
+      lcd.print("Fungisida Penuh");
       lcd.setCursor(0, 3);
-      lcd.print("Fungisida : ");
+      lcd.print("Fungisida= ");
       lcd.print(distance4);
       lcd.print("%");
       delay(1000);
@@ -808,55 +897,63 @@ void loop() {
       if((distance4 > 70) && (distance4 <= 99))
     {
       lcd.setCursor(0, 0);
-      lcd.print("Insektisida Habis");
+      lcd.print("Insektisida Zonk");
       lcd.setCursor(0, 1);
       lcd.print("Isi Ulang Pupuk!");
-      // lcd.setCursor(0, 2);
-      // lcd.print("Pupuk Fungisida");
-      // lcd.setCursor(0, 3);
-      // lcd.print("Cukup");
+      lcd.setCursor(0, 2);
+      lcd.print("Fungisida Penuh");
+      lcd.setCursor(0, 3);
+      lcd.print("Fungisida= ");
+      lcd.print(distance4);
+      lcd.print("%");
       delay(1000);
     }
     else if (distance4 == 70)
     {
       lcd.setCursor(0, 0);
-      lcd.print("Insektisida Habis");
+      lcd.print("Insektisida Zonk");
       lcd.setCursor(0, 1);
       lcd.print("Isi Ulang Pupuk!");
       lcd.setCursor(0, 2);
-      lcd.print("Pupuk Fungisida");
+      lcd.print("Fungisida Cukup");
       lcd.setCursor(0, 3);
-      lcd.print("Cukup");
+      lcd.print("Fungisida= ");
+      lcd.print(distance4);
+      lcd.print("%");
       delay(1000);
     }
     else if ((distance4 >= 40) && (distance4 <= 69))
     {
       lcd.setCursor(0, 0);
-      lcd.print("Insektisida Habis");
+      lcd.print("Insektisida Zonk");
       lcd.setCursor(0, 1);
       lcd.print("Isi Ulang Pupuk!");
       lcd.setCursor(0, 2);
-      lcd.print("Pupuk Fungisida");
+      lcd.print("Fungisida Cukup");
       lcd.setCursor(0, 3);
-      lcd.print("Menipis");
+      lcd.print("Fungisida= ");
+      lcd.print(distance4);
+      lcd.print("%");
       delay(1000);
     }
     else if ((distance4 >= 11) && (distance4 <= 39))
     {
       lcd.setCursor(0, 0);
-      lcd.print("Insektisida Habis");
+      lcd.print("Insektisida Zonk");
       lcd.setCursor(0, 1);
       lcd.print("Isi Ulang Pupuk!");
-      // lcd.setCursor(0, 2);
-      // lcd.print("Pupuk Fungisida");
-      // lcd.setCursor(0, 3);
-      // lcd.print("Menipis");
-      // delay(1000);
+      lcd.setCursor(0, 2);
+      lcd.print("Fungisida Menipis");
+      lcd.setCursor(0, 3);
+      lcd.print("Fungisida= ");
+      lcd.print(distance4);
+      lcd.print("%");
+      delay(1000);
     }
     else if(distance4 <= 10)
     {
       lcd.setCursor(0, 0);
-      lcd.print("Insektisida Habis");
+      lcd.print("Insektisida Zonk");
       lcd.setCursor(0, 1);
       lcd.print("Isi Ulang Pupuk!");
       lcd.setCursor(0, 2);
@@ -868,7 +965,7 @@ void loop() {
     else if(distance4 == 100)
     {
       lcd.setCursor(0, 0);
-      lcd.print("Insektisida Habis");
+      lcd.print("Insektisida Zonk");
       lcd.setCursor(0, 1);
       lcd.print("Isi Ulang Pupuk!");
       lcd.setCursor(0, 2);
